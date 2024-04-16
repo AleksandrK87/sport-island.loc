@@ -190,7 +190,7 @@ function si_register_types(){
       'hierarchical'          => true
    ]);
 
-   register_taxonomy('plces', ['schedule'], [
+   register_taxonomy('places', ['schedule'], [
       'labels'                => [
          'name'              => 'Залы',
          'singular_name'     => 'Залы',
@@ -227,7 +227,8 @@ function si_register_types(){
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-text-page',  
       'hierarchical'        => false,
-      'supports'            => ['title'],
+      'show_in_rest'        => true,
+      'supports'            => ['title', 'editor'],
       'has_archive' => true
    ]);
 
@@ -341,8 +342,12 @@ function si_option_slogan_cb($args){
 <?php
 } 
 
+// Define the form handler function
 function si_modal_form_handler(){
-   header('Location: ' . home_url());
+   // Handle form submission here
+   // Redirect after form submission
+   wp_redirect(home_url());
+   exit; // Always exit after a redirect
 }
 
 function si_likes(){
