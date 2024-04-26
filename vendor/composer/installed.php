@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'e41d66fc98e4bbd48eafe2f9c8120317afacb793',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'e41d66fc98e4bbd48eafe2f9c8120317afacb793',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -88,6 +88,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'wpackagist-plugin/flamingo' => array(
+            'pretty_version' => '2.5',
+            'version' => '2.5.0.0',
+            'reference' => 'tags/2.5',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../wordpress/wp-content/plugins/flamingo',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'wpackagist-plugin/hc-custom-wp-admin-url' => array(
             'pretty_version' => '1.4',
             'version' => '1.4.0.0',
@@ -103,6 +112,15 @@
             'reference' => 'trunk',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../wordpress/wp-content/plugins/rus-to-lat-advanced',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wpackagist-plugin/wp-fastest-cache' => array(
+            'pretty_version' => '1.2.5',
+            'version' => '1.2.5.0',
+            'reference' => 'tags/1.2.5',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../wordpress/wp-content/plugins/wp-fastest-cache',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

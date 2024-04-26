@@ -22,7 +22,7 @@
             <?php the_field('services_description'); ?>
             </p>
             <p class="service__action">
-              <a href="#" class="service__subscribe btn">записаться</a>
+              <a data-post-id="<?php echo $id; ?>" href="#modal-form" class="service__subscribe btn btn_modal">записаться</a>
               <strong class="service__price price">
                 <?php the_field('services_prices'); ?>
               <span class="price__unit">грн./мес.</span>

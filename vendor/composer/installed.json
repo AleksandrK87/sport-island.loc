@@ -369,6 +369,27 @@
             "install-path": "../../wordpress/wp-content/plugins/contact-form-7"
         },
         {
+            "name": "wpackagist-plugin/flamingo",
+            "version": "2.5",
+            "version_normalized": "2.5.0.0",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/flamingo/",
+                "reference": "tags/2.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/flamingo.2.5.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "installation-source": "dist",
+            "homepage": "https://wordpress.org/plugins/flamingo/",
+            "install-path": "../../wordpress/wp-content/plugins/flamingo"
+        },
+        {
             "name": "wpackagist-plugin/hc-custom-wp-admin-url",
             "version": "1.4",
             "version_normalized": "1.4.0.0",
@@ -409,6 +430,27 @@
             "installation-source": "dist",
             "homepage": "https://wordpress.org/plugins/rus-to-lat-advanced/",
             "install-path": "../../wordpress/wp-content/plugins/rus-to-lat-advanced"
+        },
+        {
+            "name": "wpackagist-plugin/wp-fastest-cache",
+            "version": "1.2.5",
+            "version_normalized": "1.2.5.0",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wp-fastest-cache/",
+                "reference": "tags/1.2.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-fastest-cache.1.2.5.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "installation-source": "dist",
+            "homepage": "https://wordpress.org/plugins/wp-fastest-cache/",
+            "install-path": "../../wordpress/wp-content/plugins/wp-fastest-cache"
         }
     ],
     "dev": true,

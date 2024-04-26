@@ -5,7 +5,9 @@
         "wpackagist-plugin/contact-form-7": "^5.8",
         "wpackagist-plugin/hc-custom-wp-admin-url": "^1.4",
         "wpackagist-plugin/rus-to-lat-advanced": "^1.1",
-        "wpackagist-plugin/breadcrumb-navxt": "^7.3"
+        "wpackagist-plugin/breadcrumb-navxt": "^7.3",
+        "wpackagist-plugin/wp-fastest-cache": "^1.2",
+        "wpackagist-plugin/flamingo": "^2.5"
     },
     "repositories":[
         {

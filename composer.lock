@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f617122a89915e80373ae59df5b802d6",
+    "content-hash": "2304f5ba6beded16fbd1e4cb915b8f6f",
     "packages": [
         {
             "name": "composer/installers",
@@ -354,6 +354,24 @@
             "homepage": "https://wordpress.org/plugins/contact-form-7/"
         },
         {
+            "name": "wpackagist-plugin/flamingo",
+            "version": "2.5",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/flamingo/",
+                "reference": "tags/2.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/flamingo.2.5.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/flamingo/"
+        },
+        {
             "name": "wpackagist-plugin/hc-custom-wp-admin-url",
             "version": "1.4",
             "source": {
@@ -388,6 +406,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/rus-to-lat-advanced/"
+        },
+        {
+            "name": "wpackagist-plugin/wp-fastest-cache",
+            "version": "1.2.5",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wp-fastest-cache/",
+                "reference": "tags/1.2.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-fastest-cache.1.2.5.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/wp-fastest-cache/"
         }
     ],
     "packages-dev": [],

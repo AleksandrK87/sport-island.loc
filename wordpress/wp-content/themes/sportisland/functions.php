@@ -19,13 +19,29 @@ add_action('wp_enqueue_scripts', 'si_scripts');
 add_action('widgets_init', 'si_register');
 add_action('init','si_register_types');
 add_action('add_meta_boxes','si_meta_boxes');
-add_action('save_post','si_save_like_meta');
+//add_action('save_post','si_save_like_meta');
 add_action('admin_init','si_register_slogan');
 add_action('admin_post_nopriv_si_modal_form','si_modal_form_handler');
 add_action('admin_post_si_modal_form','si_modal_form_handler');
 add_action('admin_ajax_nopriv_post-likes','si_likes');
 add_action('wp_ajax_post-likes','si_likes');
 add_shortcode('si-paste-link','si_paste_link');
+
+//
+
+remove_action('wp_head','feed_links_extra', 3); // убирает ссылки на rss категорий
+remove_action('wp_head','feed_links', 2); // минус ссылки на основной rss и комментарии
+remove_action('wp_head','rsd_link');  // сервис Really Simple Discovery
+remove_action('wp_head','wlwmanifest_link'); // Windows Live Writer
+remove_action('wp_head','wp_generator');  // скрыть версию wordpress
+remove_action('wp_head','start_post_rel_link',10,0);
+remove_action('wp_head','index_rel_link');
+remove_action('wp_head','adjacent_posts_rel_link_wp_head', 10, 0 );
+remove_action('wp_head','wp_shortlink_wp_head', 10, 0 );
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+
+//
 
 
 
@@ -44,10 +60,14 @@ function si_setup(){
 
 function si_style(){
    wp_enqueue_style('si-style', _si_assets_path('css/styles.css'), [], '1.0', 'all');
+   wp_dequeue_style('wp-block-library');
 }
 
 function si_scripts(){
    wp_enqueue_script('js', _si_assets_path('js/js.js'), array(), '1.0.1', 'all');
+   if ( !is_admin() ) { 
+      wp_deregister_script('jquery'); 
+   }
 }
 
 function si_register(){
@@ -254,6 +274,31 @@ function si_register_types(){
       'supports'            => ['title'],
       'has_archive' => false
    ]);
+
+   register_post_type( 'orders', [
+      'labels' => [
+        'name'               => 'Заявки', // основное название для типа записи
+        'singular_name'      => 'Заявка', // название для одной записи этого типа
+        'add_new'            => 'Добавить новую заявку', // для добавления новой записи
+        'add_new_item'       => 'Добавить новую заявку', // заголовка у вновь создаваемой записи в админ-панели.
+        'edit_item'          => 'Редактировать заявку', // для редактирования типа записи
+        'new_item'           => 'Новая заявка', // текст новой записи
+        'view_item'          => 'Смотреть заявку', // для просмотра записи этого типа.
+        'search_items'       => 'Искать заявку', // для поиска по этим типам записи
+        'not_found'          => 'Не найдено', // если в результате поиска ничего не было найдено
+        'not_found_in_trash' => 'Не найдено в корзине', // если не было найдено в корзине
+        'parent_item_colon'  => '', // для родителей (у древовидных типов)
+        'menu_name'          => 'Заявки', // название меню
+      ],
+      'public'              => false,
+      'show_ui'             => true,
+      'show_menu'           => true,
+      'menu_position'       => 20,
+      'menu_icon'           => 'dashicons-format-chat',  
+      'hierarchical'        => false,
+      'supports'            => ['title'],
+      'has_archive'         => false
+   ]);
 }
 
 function si_paste_link($attr) {
@@ -297,6 +342,23 @@ function si_meta_boxes() {
       'si_meta_like_cb',
       'post'
    );
+   $fields = [
+      'si_order_date' => 'Дата заявки: ',
+      'si_order_name' => 'Имя клиента: ',
+      'si_order_phone'=> 'Номер телефона: ',
+      'si_order_choice'=> 'Выбор клиента: '
+   ];
+   foreach ($fields as $slug => $text) {
+      add_meta_box(
+         $slug,
+         $text,
+         'si_order_fields_cb',
+         'orders',
+         'advanced',
+         'default',
+         $slug
+      );
+   }
 }
 
 function si_meta_like_cb($post_obj) {
@@ -306,11 +368,45 @@ function si_meta_like_cb($post_obj) {
    //echo '<p>' . $likes . '</p>';   
 }
 
-function si_save_like_meta( $post_id) {
+/* function si_order_fields_cb($post_obj, $slug) {
+   $slug = $slug['args'];
+   $data = get_post_meta($post_obj->ID,$slug, true);
+   $data = $data ? $data :'Нет данных';
+   echo '<p>' . $data . '</p>';
+} */
+function si_order_fields_cb($post_obj, $slug) {
+   $slug = $slug['args'];
+   $data = '';
+   switch ($slug) {
+      case 'si_order_date': 
+         $data = $post_obj->post_date;
+      break;
+      case 'si_order_choice': 
+         $id = get_post_meta($post_obj->ID, $slug, true);
+         $title = get_the_title($id);
+         $type = get_post_type_object(get_post_type($id))->labels->name;
+         $data = 'Клиент выбрал: <strong>' . $title . '</strong>. <br> Из раздела:  <strong>' . $type . '</strong>';
+         break; 
+      default:
+         $data = get_post_meta($post_obj->ID,$slug, true);
+         $data = $data ? $data :'Нет данных';
+      break;   
+   }
+   
+   echo '<p>' . $data . '</p>';
+}
+
+/* function si_order_date_cb($post_obj) {
+   $date = get_post_meta($post_obj->ID,'si_order_date', true);
+   $date = $date ? $date :'';
+   echo '<span>' . $date . '</span>';
+} */
+
+/* function si_save_like_meta( $post_id) {
    if( isset( $_POST['si-like'] ) ) {
       update_post_meta( $post_id,'si-like', $_POST['si-like'] );
    }
-}
+} */
 
 function si_register_slogan(){
    add_settings_field(
@@ -344,10 +440,32 @@ function si_option_slogan_cb($args){
 
 // Define the form handler function
 function si_modal_form_handler(){
-   // Handle form submission here
-   // Redirect after form submission
-   wp_redirect(home_url());
-   exit; // Always exit after a redirect
+   $name = $_POST['si-user-name'] ? $_POST['si-user-name'] : 'Аноним';
+   $phone = $_POST['si-user-phone'] ? $_POST['si-user-phone'] : false;
+   $choice = $_POST['form-post-id'] ? $_POST['form-post-id'] : 'empty';
+   if( $phone) {
+      $name = wp_strip_all_tags( $name );
+      $phone = wp_strip_all_tags( $phone );
+      $choice = wp_strip_all_tags(  $choice );
+      $id = wp_insert_post(wp_slash([
+         'post_title' => 'Заявка № ',
+         'post_type'=> 'orders',
+         'post_status'=> 'publish',
+         'meta_input'=> [
+            'si_order_name' => $name,
+            'si_order_phone'=> $phone,
+            'si_order_choice' => $choice
+         ]
+      ])); 
+      if($id !== 0)  {
+         wp_update_post([
+            'ID'=> $id,
+            'post_title' => 'Заявка № ' . $id
+         ]);
+         update_field('order_status','new', $id);
+      }       
+   }
+   header('Location:' . home_url() );
 }
 
 function si_likes(){
